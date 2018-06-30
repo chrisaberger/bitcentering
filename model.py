@@ -46,7 +46,7 @@ class LogisticRegression:
     ######################### LP Baseline Methods ##############################
     def forward_lp(self, x, y):
         fwd = self.lin_layer.forward_lp(x)
-        return self.loss_layer.forward_lp(fwd, y)
+        return self.loss_layer.forward_interp(fwd, y)
 
     def backward_lp(self):
         self.lin_layer.backward_lp(self.loss_layer.backward_lp())

@@ -9,7 +9,8 @@ class OptimizerData:
                  x_train, 
                  x_test, 
                  y_train, 
-                 y_test):
+                 y_test,
+                 T ):
         self.num_epochs = num_epochs
         self.num_batches = num_batches
         self.batch_size = batch_size
@@ -17,6 +18,7 @@ class OptimizerData:
         self.x_test = x_test
         self.y_train = y_train
         self.y_test = y_test
+        self.T = T
 
 def get_data(batch_index, in_data):
     start, end = batch_index * in_data.batch_size, \
