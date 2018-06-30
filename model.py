@@ -9,6 +9,7 @@ class LogisticRegression:
                  n_bits, 
                  fwd_scale_factor,
                  bck_scale_factor,
+                 loss_scale_factor,
                  in_features, 
                  out_features, 
                  lr):
@@ -19,10 +20,11 @@ class LogisticRegression:
                            bck_scale_factor=bck_scale_factor, 
                            in_features=in_features, 
                            out_features=out_features)
-        self.loss_layer = CrossEntropy(n_samples, out_features, batch_size, n_bits)
+        self.loss_layer = CrossEntropy(n_samples, out_features, batch_size, n_bits, loss_scale_factor)
         self.lr = lr
         self.fwd_scale_factor = fwd_scale_factor
         self.bck_scale_factor = bck_scale_factor
+        self.loss_scale_factor = loss_scale_factor
 
     def predict(self, x):
         fwd = self.lin_layer.forward(x, train=False)
@@ -89,4 +91,3 @@ class LogisticRegression:
     
     def step_svrg_lp(self, w_tilde_grad, g_tilde):
         self.lin_layer.step_svrg_lp(g_tilde, w_tilde_grad, self.lr)
-        

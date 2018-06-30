@@ -13,7 +13,7 @@ parser.add_argument("-e", "--n-epochs", action="store", default=10, type=int,
                     help="Number of epochs to run for")
 parser.add_argument("-bs", "--batch-size", action="store", default=100, type=int,
                     help="Batch size.")
-parser.add_argument("-a", "--alpha", action="store", default=0.01, type=int,
+parser.add_argument("-a", "--alpha", action="store", default=0.01, type=float,
                     help="Learning Rate")
 parser.add_argument("-b", "--n-bits", action="store", default=8, type=int,
                     help="Number of bits of precision")
@@ -21,6 +21,8 @@ parser.add_argument("--lin-fwd-sf", action="store", default=1, type=float,
                     help="Linear layer forward scale factor.")
 parser.add_argument("--lin-bck-sf", action="store", default=1e-2, type=float,
                     help="Linear layer backwards scale factor.")
+parser.add_argument("--loss-sf", action="store", default=1e-3, type=float,
+                    help="Loss scale factor.")
 parser.add_argument("-s", "--seed", action="store", default=42, type=int,
                     help="Random seed.")
 parser.add_argument("-c", "--n-classes", action="store", default=10, type=int,
@@ -42,6 +44,7 @@ model = model.LogisticRegression(n_samples=x_train.shape[0],
                                  n_bits=args.n_bits,
                                  fwd_scale_factor=args.lin_fwd_sf,
                                  bck_scale_factor=args.lin_bck_sf,
+                                 loss_scale_factor=args.loss_sf,
                                  in_features=x_train.shape[1], 
                                  out_features=args.n_classes,
                                  lr=args.alpha)

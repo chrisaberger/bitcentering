@@ -24,10 +24,10 @@ def lpstablesoftmax(x, iexp, num_bits, scale_factor):
 
 class CrossEntropy:
 
-    def __init__(self, n_samples, out_features, batch_size, num_bits):
+    def __init__(self, n_samples, out_features, batch_size, num_bits, scale_factor):
         self.lp_fwd_outer_result = np.zeros((n_samples, out_features))
         self.batch_size = batch_size
-        self.scale_factor = 1e-3
+        self.scale_factor = scale_factor
         self.num_bits = num_bits
 
         self.iexp = Interpolator(np.exp)

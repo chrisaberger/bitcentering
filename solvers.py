@@ -94,17 +94,6 @@ def lp_sgd_baseline(d, model):
                          100*np.mean(predY == d.y_test))
 
 def sgd_bitcentering(d, model):
-    cost = 0
-    for batch_index in range(0, d.num_batches):
-        x, y = d.get_data(batch_index)
-        cost += model.forward(x, y)
-        model.backward()
-        model.step()
-    predY = model.predict(d.x_test)
-    utils.print_info(0, 
-                     cost/d.num_batches, 
-                     100*np.mean(predY == d.y_test))
-
     for epoch in range(0, d.num_epochs):
         if epoch % d.T == 0:
             model.recenter()
