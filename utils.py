@@ -1,24 +1,23 @@
 import torch
 import numpy as np
+import math 
 
 class OptimizerData:
     def __init__(self,
-                 num_epochs, 
-                 num_batches, 
-                 batch_size, 
+                 args,
                  x_train, 
                  x_test, 
                  y_train, 
-                 y_test,
-                 T ):
-        self.num_epochs = num_epochs
-        self.num_batches = num_batches
-        self.batch_size = batch_size
+                 y_test):
+        self.num_epochs = args.n_epochs
+        self.batch_size = args.batch_size
+        self.num_batches = math.ceil(x_train.shape[0]/args.batch_size)
+        self.T = args.T
+        self.n_classes = args.n_classes
         self.x_train = x_train
         self.x_test = x_test
         self.y_train = y_train
         self.y_test = y_test
-        self.T = T
 
 def get_data(batch_index, in_data):
     start, end = batch_index * in_data.batch_size, \

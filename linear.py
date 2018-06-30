@@ -203,4 +203,23 @@ class Linear:
         index = batch_index*self.out_features
         w_tilde_grad = self.lp_back_outer_result[index:index+self.out_features,]
 
-        self.weight.delta -= ( alpha * ( w - w_tilde_grad + g_tilde ) )
+        tmp1 = self._numpy_quantize(w - w_tilde_grad, self.bck_scale_factor)
+        tmp2 = self._numpy_quantize(tmp1 + g_tilde, self.bck_scale_factor)
+        tmp3 = self._numpy_quantize(alpha * tmp2, self.bck_scale_factor)
+
+        self.weight.delta = self._numpy_quantize(self.weight.delta - tmp3, 
+                                                 self.bck_scale_factor)
+
+    def step_svrg_lp(self, w_tilde_grad, g_tilde, alpha):
+        w = self._numpy_quantize( self.weight.offset, 
+                                  self.bck_scale_factor )
+        w_tilde_grad = self._numpy_quantize( w_tilde_grad, 
+                                             self.bck_scale_factor )
+        g_tilde = self._numpy_quantize(g_tilde, self.bck_scale_factor)
+
+        tmp1 = self._numpy_quantize(w - w_tilde_grad, self.bck_scale_factor)
+        tmp2 = self._numpy_quantize(tmp1 + g_tilde, self.bck_scale_factor)
+        tmp3 = self._numpy_quantize(alpha * tmp2, self.bck_scale_factor)
+        self.weight.offset = self._numpy_quantize(self.weight.offset - tmp3, 
+                                                 self.bck_scale_factor)
+

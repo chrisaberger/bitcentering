@@ -87,3 +87,6 @@ class LogisticRegression:
     def step_svrg_inner(self, g_tilde, batch_index):
         self.lin_layer.step_svrg_inner(g_tilde, self.lr, batch_index)
     
+    def step_svrg_lp(self, w_tilde_grad, g_tilde):
+        self.lin_layer.step_svrg_lp(g_tilde, w_tilde_grad, self.lr)
+        
