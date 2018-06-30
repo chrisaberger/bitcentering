@@ -211,7 +211,7 @@ class Linear:
                                                  self.bck_scale_factor)
 
     def step_svrg_lp(self, w_tilde_grad, g_tilde, alpha):
-        w = self._numpy_quantize( self.weight.offset, 
+        w = self._numpy_quantize( self.weight.offset_grad, 
                                   self.bck_scale_factor )
         w_tilde_grad = self._numpy_quantize( w_tilde_grad, 
                                              self.bck_scale_factor )

@@ -52,21 +52,21 @@ in_data = utils.OptimizerData( args,
                                y_train, 
                                y_test )
 
-if args.solver is "sgd" or args.solver is "all":
+if args.solver == "sgd" or args.solver == "all":
     print("\nRunning SGD...")
     sgd_baseline(in_data, copy.deepcopy(model))
-if args.solver is "svrg" or args.solver is "all":
+if args.solver == "svrg" or args.solver == "all":
     print("\nRunning SVRG...")
     svrg_baseline(in_data, copy.deepcopy(model))
-if args.solver is "bc-sgd" or args.solver is "all":
+if args.solver == "bc-sgd" or args.solver == "all":
     print("\nRunning Bit Centering SGD")
     sgd_bitcentering(in_data, copy.deepcopy(model))
-if args.solver is "bc-svrg" or args.solver is "all":
+if args.solver == "bc-svrg" or args.solver == "all":
     print("\nRunning Bit Centering SVRG")
     svrg_bitcentering(in_data, copy.deepcopy(model))
-if args.solver is "lp-sgd" or args.solver is "all":
+if args.solver == "lp-sgd" or args.solver == "all":
     print("\nRunning Low Precision SGD")
     lp_sgd_baseline(in_data, copy.deepcopy(model))
-if args.solver is "lp-svrg" or args.solver is "all":
+if args.solver == "lp-svrg" or args.solver == "all":
     print("\nRunning Low Precision SVRG")
     lp_svrg_baseline(in_data, copy.deepcopy(model))

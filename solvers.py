@@ -5,7 +5,7 @@ def sgd_baseline(d, model):
     for epoch in range(0, d.num_epochs):
         cost = 0
         for batch_index in range(0, d.num_batches):
-            x, y = utils.get_data(batch_index, d)
+            x, y = d.get_data(batch_index)
             cost += model.forward(x, y)
             model.backward()
             model.step()
@@ -28,7 +28,7 @@ def svrg_baseline(d, model):
 
         cost = 0
         for batch_index in range(0, d.num_batches):
-            x, y = utils.get_data(batch_index, d)
+            x, y = d.get_data(batch_index)
 
             w_offset = np.copy(model.lin_layer.weight.offset)
             np.copyto(model.lin_layer.weight.offset, w_tilde)
@@ -60,7 +60,7 @@ def lp_svrg_baseline(d, model):
 
         cost = 0
         for batch_index in range(0, d.num_batches):
-            x, y = utils.get_data(batch_index, d)
+            x, y = d.get_data(batch_index)
 
             w_offset = np.copy(model.lin_layer.weight.offset)
             np.copyto(model.lin_layer.weight.offset, w_tilde)
@@ -83,7 +83,7 @@ def lp_sgd_baseline(d, model):
     for epoch in range(0, d.num_epochs):
         cost = 0
         for batch_index in range(0, d.num_batches):
-            x, y = utils.get_data(batch_index, d)
+            x, y = d.get_data(batch_index)
             cost += model.forward_lp(x, y)
             model.backward_lp()
             model.step()
@@ -96,7 +96,7 @@ def lp_sgd_baseline(d, model):
 def sgd_bitcentering(d, model):
     cost = 0
     for batch_index in range(0, d.num_batches):
-        x, y = utils.get_data(batch_index, d)
+        x, y = d.get_data(batch_index)
         cost += model.forward(x, y)
         model.backward()
         model.step()
@@ -110,13 +110,13 @@ def sgd_bitcentering(d, model):
             model.recenter()
             # Cache the results.
             for batch_index in range(0, d.num_batches):
-                x, y = utils.get_data(batch_index, d)
+                x, y = d.get_data(batch_index)
                 model.forward_store(x, y, batch_index)
                 model.backward_store(batch_index)
 
         cost = 0
         for batch_index in range(0, d.num_batches):
-            x, y = utils.get_data(batch_index, d)
+            x, y = d.get_data(batch_index)
             cost += model.forward_inner(x, y, batch_index)
             model.backward_inner(batch_index)
             model.step_inner()
@@ -139,14 +139,13 @@ def svrg_bitcentering(d, model):
 
             # Cache the results.
             for batch_index in range(0, d.num_batches):
-                # TODO: get_data should be a class method of d.
-                x, y = utils.get_data(batch_index, d)
+                x, y = d.get_data(batch_index)
                 model.forward_store(x, y, batch_index)
                 model.backward_store(batch_index)
 
         cost = 0
         for batch_index in range(0, d.num_batches):
-            x, y = utils.get_data(batch_index, d)
+            x, y = d.get_data(batch_index)
 
             cost += model.forward_inner(x, y, batch_index)
             model.backward_inner(batch_index)
